@@ -1,0 +1,16 @@
+/.gradle/
+/.idea/
+/build/
+/conf/
+
+/.env
+/services/nginx/logs/**
+/services/logstash/
+/app.main.log
+/applicationLogs
+/files/**
+!/files/PUBLIC_DATA
+
+jaicf-plugin/.gradle/
+jaicf-plugin/.idea/
+jaicf-plugin/build/

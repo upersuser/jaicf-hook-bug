@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+    mongo:
+        container_name: mongo_jaicf
+        image: mongo:6-focal
+        ports:
+            - "27017:27017"
+        restart: always

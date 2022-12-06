@@ -1,0 +1,32 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+      authentication-database: admin
+      database: jaicf
+  profiles:
+    active: "dev"
+
+logging:
+  pattern:
+    console: '%d {"accountId":"%X{accountId}","botName":"%X{bot}","requestId":"%X{requestId}","level":"%5p","from":"%8c"} - %m %n'
+    file: "%d [a:%X{accountId},c:%X{bot},r:%X{requestId}] %5p [%8c] - %m %n"
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      file-name-pattern: "./applicationLogs/main.%d.%i.log.gz" #
+  file:
+    name: ./app.main.log
+  level:
+    "com.justai": info
+    "org.springframework": warn
+bot:
+  mongoCollection: botContext
+  telegramToken: ${TELEGRAM_TOKEN}
+  webhookEndpoint: ${POINT_ADDRESS}
+

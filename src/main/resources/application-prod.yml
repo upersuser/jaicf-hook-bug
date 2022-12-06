@@ -1,0 +1,62 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+
+#debug: true
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+      authentication-database: admin
+      database: jaicf
+  profiles:
+    active: "prod"
+  main:
+    banner-mode: off
+
+
+management:
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+      slo:
+        "[http.server.requests]": 100ms, 400ms, 500ms, 2000ms
+      percentiles:
+        "[http.server.requests]": 0.5, 0.9, 0.95, 0.99
+    export:
+      elastic:
+        enabled: true
+        step: 10s
+        index: app-metrics
+        host: ${ELASTICSEARCH}
+    tags:
+      host: HOSTNAME
+      application: APPLICATION
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,info
+
+logging:
+  pattern:
+    console: "%d [a:%X{accountId},c:%X{bot},r:%X{requestId}] %5p [%8c] - %m %n"
+    file: "%d [a:%X{accountId},c:%X{bot},r:%X{requestId}] %5p [%8c] - %m %n"
+  logback:
+    rollingpolicy:
+      max-file-size: 1000MB
+      file-name-pattern: "main.%d.%i.log.gz"
+  file:
+    name: /app.main.log
+  level:
+    "com.justai": info
+    "org.springframework": warn
+bot:
+  mongoCollection: botContext
+  telegramToken: ${TELEGRAM_TOKEN}
+  authorisationRasaRuToken: ${AUTHORISATION_RASA_RU_TOKEN}
+
+point:
+  address: ${POINT_ADDRESS}
